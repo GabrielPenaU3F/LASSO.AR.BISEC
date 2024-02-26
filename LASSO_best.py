@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import GridSearchCV
 
-def best_lasso(X,y,selection='cyclic'):
+def best_lasso(X, y, selection='cyclic'):
     '''
     :param X: Features
     :param y: target

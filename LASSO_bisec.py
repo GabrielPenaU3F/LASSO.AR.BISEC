@@ -5,15 +5,15 @@ from sklearn.linear_model import Lasso
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import RobustScaler
-from scenarios import scenario_1,scenario_2,scenario_3
+from scenarios import scenario_1, scenario_2, scenario_3
 from sklearn.model_selection import KFold
 import matplotlib.pyplot as plt
 
 
-def seleccion_variables_bis_vs_lassomin(X,y,eps = 0.05,mse='todas'):
+def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
     n,p = X.shape
-    frecuencias = area_tray_coef_lasso(X,y)
-    best_lambda, best_score, lambda_1se = best_lasso(X,y)
+    frecuencias = area_tray_coef_lasso(X, y)
+    best_lambda, best_score, lambda_1se = best_lasso(X, y)
     indeces_ordenan_frecuencias = np.argsort(frecuencias).tolist()
     indeces_ordenan_frecuencias.reverse()
     clf = Lasso(alpha=best_lambda, fit_intercept=False)
@@ -23,7 +23,7 @@ def seleccion_variables_bis_vs_lassomin(X,y,eps = 0.05,mse='todas'):
 
     if mse =='LASSO.MIN':
         a = 0
-        if len(selected_features_LASSOMIN) < n :
+        if len(selected_features_LASSOMIN) < n:
             b = len(selected_features_LASSOMIN)-1
         else:
             b = p-1
@@ -95,7 +95,9 @@ def seleccion_variables_bis_vs_lassomin(X,y,eps = 0.05,mse='todas'):
             stop = True
     return indeces_ordenan_frecuencias[:cant_variables],selected_features_LASSOMIN
 
-def monte_carlo_bisec_vs_lassomin(scenario,coef, n,p,s,rho=None, cant_clusters = None,cant_sim = 1, eps = 0.05,mse = 'todas'):
+
+def monte_carlo_bisec_vs_lassomin(scenario, n, p, s,
+                                  rho=None, cant_clusters = None, cant_sim=1, eps=0.05, mse='todas'):
 
     if scenario == '1' or scenario == '3' or scenario=='1random' or scenario=='3random':
         cant_false_fea_selec_LASSOAREAS = 0
@@ -121,9 +123,10 @@ def monte_carlo_bisec_vs_lassomin(scenario,coef, n,p,s,rho=None, cant_clusters =
         X = rb.fit_transform(X)
 
         if scenario == '1' or scenario == '3':
-            selected_features_LASSOAREAS, selected_features_LASSOMIN =  seleccion_variables_bis_vs_lassomin(X,y,eps = eps,mse=mse)
+            selected_features_LASSOAREAS, selected_features_LASSOMIN = seleccion_variables_bis_vs_lassomin(
+                X, y, eps=eps, mse=mse)
             false_fea_selec_LASSOAREAS = [i for i in selected_features_LASSOAREAS if i not in range(s)]
-            cant_false_fea_selec_LASSOAREAS+= len(false_fea_selec_LASSOAREAS)
+            cant_false_fea_selec_LASSOAREAS += len(false_fea_selec_LASSOAREAS)
             false_fea_selec_LASSOMIN = [i for i in selected_features_LASSOMIN if i not in range(s)]
             cant_false_fea_selec_LASSOMIN += len(false_fea_selec_LASSOMIN)
             true_fea_selec_LASSOAREAS = [i for i in range(s) if i in selected_features_LASSOAREAS]
@@ -131,7 +134,8 @@ def monte_carlo_bisec_vs_lassomin(scenario,coef, n,p,s,rho=None, cant_clusters =
             true_fea_selec_LASSOMIN = [i for i in range(s) if i in selected_features_LASSOMIN]
             cant_true_fea_selec_LASSOMIN += len(true_fea_selec_LASSOMIN)
         else:
-            selected_features_LASSOAREAS, selected_features_LASSOMIN  =  seleccion_variables_bis_vs_lassomin(X,y,eps = eps,mse=mse)
+            selected_features_LASSOAREAS, selected_features_LASSOMIN = seleccion_variables_bis_vs_lassomin(
+                X, y, eps=eps, mse=mse)
             for resto in range(cant_clusters):
                 false_fea_selec_LASSO_AREAS = [i for i in selected_features_LASSOAREAS if
                                                (i % cant_clusters) == resto and i not in range(s)]
@@ -156,7 +160,8 @@ def monte_carlo_bisec_vs_lassomin(scenario,coef, n,p,s,rho=None, cant_clusters =
         mean_cant_false_fea_selec_LASSOMIN = cant_false_fea_selec_LASSOMIN / cant_sim
         mean_cant_true_fea_selec_LASSOMIN = cant_true_fea_selec_LASSOMIN / cant_sim
 
-        return mean_cant_false_fea_selec_LASSOAREAS, mean_cant_true_fea_selec_LASSOAREAS, mean_cant_false_fea_selec_LASSOMIN, mean_cant_true_fea_selec_LASSOMIN
+        return (mean_cant_false_fea_selec_LASSOAREAS, mean_cant_true_fea_selec_LASSOAREAS,
+                mean_cant_false_fea_selec_LASSOMIN, mean_cant_true_fea_selec_LASSOMIN)
 
     else:
         mean_cant_false_fea_selec_LASSOAREAS = [cant / cant_sim for cant in
@@ -167,9 +172,12 @@ def monte_carlo_bisec_vs_lassomin(scenario,coef, n,p,s,rho=None, cant_clusters =
                                                 cant_false_fea_selec_LASSOMIN]
         mean_cant_true_fea_selec_LASSOMIN = [cant / cant_sim for cant in cant_true_fea_selec_LASSOMIN]
 
-        return mean_cant_false_fea_selec_LASSOAREAS, mean_cant_true_fea_selec_LASSOAREAS, mean_cant_false_fea_selec_LASSOMIN, mean_cant_true_fea_selec_LASSOMIN
+        return (mean_cant_false_fea_selec_LASSOAREAS, mean_cant_true_fea_selec_LASSOAREAS,
+                mean_cant_false_fea_selec_LASSOMIN, mean_cant_true_fea_selec_LASSOMIN)
 
-def grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s, mse='todas',rho=None,cant_clusters= None, cant_sim = 1, eps = 0.05, showfig = False, savefig = False, save_in = None):
+
+def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rho=None, cant_clusters=None,
+                                         cant_sim=1, eps=0.05, showfig=False, savefig=False, save_in=None):
 
     if scenario == '1' or scenario == '3':
         true_LASSOAREAS_nlist = []
@@ -177,7 +185,8 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s, mse='todas
         true_LASSOMIN_nlist = []
         false_LASSOMIN_nlist = []
         for n in n_list:
-            mean_false_LASSOAREAS, mean_true_LASSOAREAS,mean_false_LASSOMIN, mean_true_LASSOMIN = monte_carlo_bisec_vs_lassomin(scenario,coef,n,p,s,rho,cant_sim = cant_sim, eps = eps, mse = mse)
+            mean_false_LASSOAREAS, mean_true_LASSOAREAS,mean_false_LASSOMIN, mean_true_LASSOMIN =\
+                monte_carlo_bisec_vs_lassomin(scenario, n, p, s, rho, cant_sim=cant_sim, eps=eps, mse=mse)
             true_LASSOAREAS_nlist.append(mean_true_LASSOAREAS)
             false_LASSOAREAS_nlist.append(mean_false_LASSOAREAS)
             true_LASSOMIN_nlist.append(mean_true_LASSOMIN)
@@ -202,7 +211,8 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s, mse='todas
         plt.legend()
 
         if savefig:
-            filename = save_in + '\SCE%s_LASSO_ARBIS_esp=%s_s%s_rho%s_cant_sim%s.png' % (scenario,eps, s, rho, cant_sim)
+            filename = save_in + 'scenario%s/SCE%s_LASSO_ARBIS_esp=%s_s%s_rho%s_cant_sim%s.pdf' % (
+                scenario, scenario, eps, s, rho, cant_sim)
             plt.savefig(fname=filename)
         if showfig:
             plt.show()
@@ -221,19 +231,22 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s, mse='todas
         plt.legend()
 
         if savefig:
-            filename = save_in + '\SCE%s_LASSO_MIN_s%s_rho%s_cant_sim%s.png' % (scenario, s, rho, cant_sim)
+            filename = save_in + 'scenario%s/SCE%s_LASSO_MIN_s%s_rho%s_cant_sim%s.pdf' % (
+                scenario, scenario, s, rho, cant_sim)
             plt.savefig(fname=filename)
         if showfig:
             plt.show()
 
     else:
         for n in n_list:
-            mean_false_LASSOAREAS, mean_true_LASSOAREAS, mean_false_LASSOMIN, mean_true_LASSOMIN = monte_carlo_bisec_vs_lassomin(scenario, coef,n,p,s,rho=rho, cant_clusters =cant_clusters,cant_sim = cant_sim, eps = 0.05,mse=mse)
+            mean_false_LASSOAREAS, mean_true_LASSOAREAS, mean_false_LASSOMIN, mean_true_LASSOMIN = (
+                monte_carlo_bisec_vs_lassomin(scenario, n, p, s, rho=rho, cant_clusters=cant_clusters,
+                                              cant_sim=cant_sim, eps=0.05, mse=mse))
             x = np.arange(cant_clusters)
             fig, ax = plt.subplots()
             ax.bar(x, mean_true_LASSOAREAS, width=1, edgecolor="white", linewidth=0.7,label='True variables')
             ax.bar(x, mean_false_LASSOAREAS, bottom=mean_true_LASSOAREAS,
-                   width=1, edgecolor="white", linewidth=0.7,label='False variables')
+                   width=1, edgecolor="white", linewidth=0.7, label='False variables')
             x_label = 'mod %s' % (str(cant_clusters))
             plt.xlabel(x_label)
             y_label = 'true and false selected variables'
@@ -244,16 +257,16 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s, mse='todas
             plt.legend()
 
             if savefig:
-                filename = save_in + '\SC%s_LASSO_AR_BISeps=%s_n=%s_p=%s_s=%s_rho=%s_cantsim=%s.png' % (
-                scenario,eps,n, p, s, rho, cant_sim)
+                filename = save_in + 'scenario%s/SC%s_LASSO_AR_BISeps=%s_n=%s_p=%s_s=%s_rho=%s_cantsim=%s.pdf' % (
+                scenario, scenario, eps, n, p, s, rho, cant_sim)
                 plt.savefig(fname=filename)
             if showfig:
                 plt.show()
 
             fig, ax = plt.subplots()
-            ax.bar(x, mean_true_LASSOMIN, width=1, edgecolor="white", linewidth=0.7,label='True variables')
+            ax.bar(x, mean_true_LASSOMIN, width=1, edgecolor="white", linewidth=0.7, label='True variables')
             ax.bar(x, mean_false_LASSOMIN, bottom=mean_true_LASSOMIN,
-                   width=1, edgecolor="white", linewidth=0.7,label='False variables')
+                   width=1, edgecolor="white", linewidth=0.7, label='False variables')
             x_label = 'mod %s' % (str(cant_clusters))
             plt.xlabel(x_label)
             y_label = 'true and false selected variables'
@@ -264,26 +277,28 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s, mse='todas
             plt.legend()
 
             if savefig:
-                filename = save_in + '\SC%s_LASSO_MIN_n=%s_p=%s_s=%s_rho=%s_cantsim=%s.png' % (
-                    scenario, n, p, s, rho, cant_sim)
+                filename = save_in + 'scenario%s/SC%s_LASSO_MIN_n=%s_p=%s_s=%s_rho=%s_cantsim=%s.pdf' % (
+                    scenario, scenario, n, p, s, rho, cant_sim)
                 plt.savefig(fname=filename)
             if showfig:
                 plt.show()
+
 
 n_list = [400]
 p = 50
 s = 10
 scenario = '2'
-rho_list = [0.2,0.5,0.9]
+rho_list = [0.2, 0.5, 0.9]
 sigma2 = 0.9
 cant_clusters = 10
 cant_sim = 5
-eps_list= [0.01]
-save_in = r'C:\Vero\ML\codigos_Python\Figuras_paper\LASSOARBISmseLASSOMIN\SCENARIO%s' %(scenario)
-coef=None
+eps_list = [0.01]
+save_in = 'results/'
 for eps in eps_list:
     for rho in rho_list:
-        grafico_montecarlo_bisec_vs_lassomin(scenario,coef, n_list, p, s,mse = 'LASSO.MIN', rho=rho,cant_clusters= cant_clusters, cant_sim = cant_sim, eps = eps, showfig = False, savefig = True, save_in = save_in)
+        grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
+                                             cant_clusters=cant_clusters, cant_sim=cant_sim, eps=eps,
+                                             showfig=False, savefig=True, save_in=save_in)
 
 
 # X, y = scenario_1(n, p, s, sigma2)
