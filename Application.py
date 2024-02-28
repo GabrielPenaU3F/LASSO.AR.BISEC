@@ -24,6 +24,7 @@ def grafico_areas_ordenadas(X, y, name=False, savefig=False, showfig=True, save_
     plt.plot([i for i in range(p)], areas_reversed, 'co', color='blue', )
     title = r'Ordered areas'
     if name:
+        title += ' - '
         title += name
 
     plt.title(title)
@@ -69,7 +70,8 @@ X = X_Df_encod.values.tolist()
 y_3 = np.array(datos_estudiantes_mat[target_3_name].tolist())
 y = y_3
 
-#grafico_areas_ordenadas(X,y,name=False,savefig=False,showfig=True,save_in='results/'
+name='Student-Mat'
+grafico_areas_ordenadas(X,y,name=name,savefig=True,showfig=True,save_in='results/')
 
 eps_list = [0.01, 0.005, 0.0025]
 for eps in eps_list:

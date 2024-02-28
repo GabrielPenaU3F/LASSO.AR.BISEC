@@ -23,11 +23,11 @@ def scenario_2(n, p, s, rho, sigma2, cant_clusters):
   cov = np.eye(p)
   for i in range(p):
     for j in range(p):
-     if i != j and i % M == j % M:
-       cov[i, j] = rho
-       X = np.random.multivariate_normal(mean, cov, n)
-       error = np.random.normal(0, sigma2, n)
-       y = [sum([X[i][j] for j in range(s)]) for i in range(n)] + error
+      if i != j and i % M == j % M:
+         cov[i, j] = rho
+         X = np.random.multivariate_normal(mean, cov, n)
+         error = np.random.normal(0, sigma2, n)
+         y = [sum([X[i][j] for j in range(s)]) for i in range(n)] + error
 
   return X, y
 

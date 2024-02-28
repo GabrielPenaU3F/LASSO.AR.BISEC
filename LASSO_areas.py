@@ -56,7 +56,7 @@ def grafico_areas_ordenadas(scenario, n, p, s, rho=None, showfig=False, savefig=
         rb = RobustScaler()
         X = rb.fit_transform(X)
 
-        frecuencias_ = area_tray_coef_lasso(X, y, selection)
+        frecuencias_ = area_tray_coef_lasso(X, y, selection=selection)
 
 
         indeces_ordenan_frecuencias = np.argsort(frecuencias_).tolist()
