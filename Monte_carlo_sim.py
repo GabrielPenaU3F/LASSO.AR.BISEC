@@ -107,12 +107,12 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
             n_list_string.append(text)
 
         fig, ax = plt.subplots()
-        ax.bar(n_list_string, true_LASSOAREAS_nlist, width=1, edgecolor="white", linewidth=0.7,label='True variables')
+        ax.bar(n_list_string, true_LASSOAREAS_nlist, width=1, edgecolor="white", linewidth=0.7,label='Informative variables')
         ax.bar(n_list_string, false_LASSOAREAS_nlist, bottom=true_LASSOAREAS_nlist,
-               width=1, edgecolor="white", linewidth=0.7,label='False variables')
+               width=1, edgecolor="white", linewidth=0.7,label='Uninformative variables')
         x_label = 'sample size (n)'
         plt.xlabel(x_label)
-        y_label = 'true and false selected variables'
+        y_label = 'Selected variables'
         plt.ylabel(y_label)
         text = r'LASSO.AR Bisec $\epsilon = $ %s' %(eps)
         text_ = r'%s p=%s, s=%s, $\rho=$ %s' % (text, p, s, rho)
@@ -127,12 +127,12 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
             plt.show()
 
         fig, ax = plt.subplots()
-        ax.bar(n_list_string, true_LASSOMIN_nlist, width=1, edgecolor="white", linewidth=0.7,label='True variables')
+        ax.bar(n_list_string, true_LASSOMIN_nlist, width=1, edgecolor="white", linewidth=0.7,label='Informative variables')
         ax.bar(n_list_string, false_LASSOMIN_nlist, bottom=true_LASSOMIN_nlist,
-               width=1, edgecolor="white", linewidth=0.7,label='False variables')
+               width=1, edgecolor="white", linewidth=0.7,label='Uninformative variables')
         x_label = 'sample size (n)'
         plt.xlabel(x_label)
-        y_label = 'true and false selected variables'
+        y_label = 'Selected variables'
         plt.ylabel(y_label)
         text = r'LASSO.MIN '
         text_ = r'%s p=%s, s=%s, $\rho=$ %s' % (text, p, s, rho)
@@ -153,12 +153,12 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
                                               cant_sim=cant_sim, eps=0.05, mse=mse))
             x = np.arange(cant_clusters)
             fig, ax = plt.subplots()
-            ax.bar(x, mean_true_LASSOAREAS, width=1, edgecolor="white", linewidth=0.7,label='True variables')
+            ax.bar(x, mean_true_LASSOAREAS, width=1, edgecolor="white", linewidth=0.7,label='Informative variables')
             ax.bar(x, mean_false_LASSOAREAS, bottom=mean_true_LASSOAREAS,
-                   width=1, edgecolor="white", linewidth=0.7, label='False variables')
+                   width=1, edgecolor="white", linewidth=0.7, label='Uninformative variables')
             x_label = 'mod %s' % (str(cant_clusters))
             plt.xlabel(x_label)
-            y_label = 'true and false selected variables'
+            y_label = 'Selected variables'
             plt.ylabel(y_label)
             text = r'LASSO.AR Bisec $\epsilon = $ %s' %(eps)
             text_ = '%s p=%s, n=%s, s=%s, rho=%s' % (text, p, n, s, rho)
@@ -173,12 +173,12 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
                 plt.show()
 
             fig, ax = plt.subplots()
-            ax.bar(x, mean_true_LASSOMIN, width=1, edgecolor="white", linewidth=0.7, label='True variables')
+            ax.bar(x, mean_true_LASSOMIN, width=1, edgecolor="white", linewidth=0.7, label='Informative variables')
             ax.bar(x, mean_false_LASSOMIN, bottom=mean_true_LASSOMIN,
-                   width=1, edgecolor="white", linewidth=0.7, label='False variables')
+                   width=1, edgecolor="white", linewidth=0.7, label='Uninformative variables')
             x_label = 'mod %s' % (str(cant_clusters))
             plt.xlabel(x_label)
-            y_label = 'true and false selected variables'
+            y_label = 'Selected variables'
             plt.ylabel(y_label)
             text = r'LASSO.MIN'
             text_ = '%s p=%s, n=%s, s=%s, rho=%s' % (text, p, n, s, rho)
@@ -196,40 +196,40 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
 '''
 Monte Carlo simulation for scenario 1
 '''
-# n_list = [100,200,400]
-# p = 50
-# s = 10
-# scenario = '1'
-# rho_list = [None]
-# sigma2 = 0.9
-# cant_sim = 5
-# eps_list = [0.01]
-# save_in = 'results/'
-# for eps in eps_list:
-#     for rho in rho_list:
-#         grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
-#                                              cant_sim=cant_sim, eps=eps,
-#                                              showfig=False, savefig=True, save_in=save_in)
+n_list = [100,200,400]
+p = 50
+s = 10
+scenario = '1'
+rho_list = [None]
+sigma2 = 0.9
+cant_sim = 1000
+eps_list = [0.01]
+save_in = 'results/'
+for eps in eps_list:
+    for rho in rho_list:
+        grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
+                                             cant_sim=cant_sim, eps=eps,
+                                             showfig=False, savefig=True, save_in=save_in)
 
 
 '''
 Monte Carlo simulation for scenario 2
 '''
-# n_list = [400]
-# p = 50
-# s = 10
-# scenario = '2'
-# rho_list = [0.2,0.5,0.9]
-# cant_clusters=10
-# sigma2 = 0.9
-# cant_sim = 5
-# eps_list = [0.01]
-# save_in = 'results/'
-# for eps in eps_list:
-#     for rho in rho_list:
-#         grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
-#                                              cant_clusters=cant_clusters, cant_sim=cant_sim, eps=eps,
-#                                              showfig=False, savefig=True, save_in=save_in)
+n_list = [400]
+p = 50
+s = 10
+scenario = '2'
+rho_list = [0.2,0.5,0.9]
+cant_clusters=10
+sigma2 = 0.9
+cant_sim = 1000
+eps_list = [0.01]
+save_in = 'results/'
+for eps in eps_list:
+    for rho in rho_list:
+        grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
+                                             cant_clusters=cant_clusters, cant_sim=cant_sim, eps=eps,
+                                             showfig=False, savefig=True, save_in=save_in)
 
 
 '''
@@ -241,7 +241,7 @@ s = 10
 scenario = '3'
 rho_list = [0.2, 0.5, 0.9]
 sigma2 = 0.9
-cant_sim = 5
+cant_sim = 1000
 eps_list = [0.01]
 save_in = 'results/'
 for eps in eps_list:

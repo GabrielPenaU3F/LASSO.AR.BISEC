@@ -72,9 +72,9 @@ def grafico_areas_ordenadas(scenario, n, p, s, rho=None, showfig=False, savefig=
 
 
         plt.plot(indeces_ordenan_frecuencias_true, frecuencias_ord_true_var,
-                 'co', color='#1f77b4', label='True variables')
+                 'co', color='#1f77b4', label='Informative variables')
         plt.plot(indeces_ordenan_frecuencias_false, frecuencias_ord_false_var,
-                 'co', color='#ff7f0e', label='False variables' )
+                 'co', color='#ff7f0e', label='Uninformative variables' )
 
         title = r'Ordered areas scenario %s  n=%s, s=%s, $\rho$=%s' % (scenario, n, s, rho)
         plt.title(title)
