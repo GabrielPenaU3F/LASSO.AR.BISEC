@@ -5,7 +5,8 @@ import numpy as np
 from scenarios import scenario_1,scenario_2,scenario_3
 import matplotlib.pyplot as plt
 
-def area_tray_coef_lasso(X,y,fit_intercept=False,selection='cyclic'):
+
+def area_tray_coef_lasso(X, y, fit_intercept=False, selection='cyclic'):
     '''
     Considera una grilla de valores de lambdas y aplica LASSO en todos los lambda de la grilla
     :param X: Features
@@ -19,7 +20,7 @@ def area_tray_coef_lasso(X,y,fit_intercept=False,selection='cyclic'):
     start = np.log10(lambda_min)
     end = np.log10(lambda_max)
     K = 100
-    lambdas = np.logspace(start, end, K) # esta es la grilla de valores
+    lambdas = np.logspace(start, end, K)  # esta es la grilla de valores
     areas = p * [0]
     for lambda_ in lambdas:
         clf = Lasso(alpha=lambda_, fit_intercept=fit_intercept, selection=selection)

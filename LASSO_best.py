@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import GridSearchCV
 
+
 def best_lasso(X, y, selection='cyclic'):
     '''
     :param X: Features
@@ -15,8 +16,8 @@ def best_lasso(X, y, selection='cyclic'):
     lambda_min = eps*lambda_max
     start = np.log10(lambda_min)
     end = np.log10(lambda_max)
-    K=100
-    lambdas = np.logspace(start,end,K)
+    K = 100
+    lambdas = np.logspace(start, end, K)
     lasso = Lasso(random_state=0, max_iter=1000000,fit_intercept=False,selection=selection)
     tuned_parameters = [{'alpha': lambdas}]
     clf = GridSearchCV(lasso, tuned_parameters, cv=cv, scoring='neg_mean_squared_error')
@@ -28,4 +29,4 @@ def best_lasso(X, y, selection='cyclic'):
     lasso_1se_index = np.argmax(np.where(clf.cv_results_['mean_test_score'] < best_score + best_std))
     lambda_1se = lambdas[lasso_1se_index]
 
-    return best_lambda, best_score,lambda_1se
+    return best_lambda, best_score, lambda_1se

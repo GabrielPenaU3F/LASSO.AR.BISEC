@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
-    n,p = X.shape
+    n, p = X.shape
     frecuencias = area_tray_coef_lasso(X, y)
     best_lambda, best_score, lambda_1se = best_lasso(X, y)
     indeces_ordenan_frecuencias = np.argsort(frecuencias).tolist()
@@ -21,14 +21,14 @@ def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
     coeficientes = clf.coef_
     selected_features_LASSOMIN = [i for i in range(len(coeficientes)) if abs(coeficientes[i]) > 0.00001]
 
-    if mse =='LASSO.MIN':
+    if mse == 'LASSO.MIN':
         a = 0
         if len(selected_features_LASSOMIN) < n:
             b = len(selected_features_LASSOMIN)-1
         else:
             b = p-1
         mse = 0
-        if b>=1:
+        if b >= 1:
             kf = KFold(n_splits=5)
             for train, test in kf.split(X):
                 X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
@@ -38,17 +38,17 @@ def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
                 X_sel_test = [[X_test[i][j] for j in selected_features_LASSOMIN] for i in range(len(y_test))]
                 y_pred = reg.predict(X_sel_test)
                 mse += mean_squared_error(y_test, y_pred)
-            mse = mse/ 5
+            mse = mse / 5
             cant_variables = len(selected_features_LASSOMIN)
             stop = False
         else:
             stop = True
             cant_variables = 1
     if mse == 'todas':
-        if p<n:
-            b = p-1
+        if p < n:
+            b = p - 1
         else:
-            b = n -1
+            b = n - 1
 
         a = 0
         mse = 0
@@ -78,7 +78,7 @@ def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
                 reg = LinearRegression(fit_intercept=False).fit(X_sel_train, y_train)
                 X_sel_test = [[X_test[i][j] for j in selected_var] for i in range(len(y_test))]
                 y_pred = reg.predict(X_sel_test)
-                mse_new +=  mean_squared_error(y_test, y_pred)
+                mse_new += mean_squared_error(y_test, y_pred)
             mse_new = mse_new/5
             if mse_new < mse*(1+eps):
                 #mse = mse_new
@@ -93,7 +93,7 @@ def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
                 stop = True
         else:
             stop = True
-    return indeces_ordenan_frecuencias[:cant_variables],selected_features_LASSOMIN
+    return indeces_ordenan_frecuencias[:cant_variables], selected_features_LASSOMIN
 
 
 

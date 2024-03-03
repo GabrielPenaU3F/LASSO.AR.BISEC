@@ -5,10 +5,11 @@ from scenarios import scenario_1, scenario_2, scenario_3
 import matplotlib.pyplot as plt
 from LASSO_bisec import seleccion_variables_bis_vs_lassomin
 
-def monte_carlo_bisec_vs_lassomin(scenario, n, p, s,
-                                  rho=None, cant_clusters = None, cant_sim=1, eps=0.05, mse='todas'):
 
-    if scenario == '1' or scenario == '3' or scenario=='1random' or scenario=='3random':
+def monte_carlo_bisec_vs_lassomin(scenario, n, p, s,
+                                  rho=None, cant_clusters=None, cant_sim=1, eps=0.05, mse='todas'):
+
+    if scenario == '1' or scenario == '3' or scenario == '1random' or scenario == '3random':
         cant_false_fea_selec_LASSOAREAS = 0
         cant_true_fea_selec_LASSOAREAS = 0
         cant_false_fea_selec_LASSOMIN = 0
@@ -107,14 +108,15 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
             n_list_string.append(text)
 
         fig, ax = plt.subplots()
-        ax.bar(n_list_string, true_LASSOAREAS_nlist, width=1, edgecolor="white", linewidth=0.7,label='Informative variables')
+        ax.bar(n_list_string, true_LASSOAREAS_nlist, width=1, edgecolor="white", linewidth=0.7,
+               label='Informative variables')
         ax.bar(n_list_string, false_LASSOAREAS_nlist, bottom=true_LASSOAREAS_nlist,
-               width=1, edgecolor="white", linewidth=0.7,label='Uninformative variables')
+               width=1, edgecolor="white", linewidth=0.7, label='Uninformative variables')
         x_label = 'sample size (n)'
         plt.xlabel(x_label)
         y_label = 'Selected variables'
         plt.ylabel(y_label)
-        text = r'LASSO.AR Bisec $\epsilon = $ %s' %(eps)
+        text = r'LASSO.AR Bisec $\epsilon = $ %s' % eps
         text_ = r'%s p=%s, s=%s, $\rho=$ %s' % (text, p, s, rho)
         plt.title(text_)
         plt.legend()
@@ -127,9 +129,10 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
             plt.show()
 
         fig, ax = plt.subplots()
-        ax.bar(n_list_string, true_LASSOMIN_nlist, width=1, edgecolor="white", linewidth=0.7,label='Informative variables')
+        ax.bar(n_list_string, true_LASSOMIN_nlist, width=1, edgecolor="white", linewidth=0.7,
+               label='Informative variables')
         ax.bar(n_list_string, false_LASSOMIN_nlist, bottom=true_LASSOMIN_nlist,
-               width=1, edgecolor="white", linewidth=0.7,label='Uninformative variables')
+               width=1, edgecolor="white", linewidth=0.7, label='Uninformative variables')
         x_label = 'sample size (n)'
         plt.xlabel(x_label)
         y_label = 'Selected variables'
@@ -160,7 +163,7 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
             plt.xlabel(x_label)
             y_label = 'Selected variables'
             plt.ylabel(y_label)
-            text = r'LASSO.AR Bisec $\epsilon = $ %s' %(eps)
+            text = r'LASSO.AR Bisec $\epsilon = $ %s' % eps
             text_ = '%s p=%s, n=%s, s=%s, rho=%s' % (text, p, n, s, rho)
             plt.title(text_)
             plt.legend()
@@ -196,7 +199,7 @@ def grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='todas', rh
 '''
 Monte Carlo simulation for scenario 1
 '''
-n_list = [100,200,400]
+n_list = [100, 200, 400]
 p = 50
 s = 10
 scenario = '1'
@@ -219,8 +222,8 @@ n_list = [400]
 p = 50
 s = 10
 scenario = '2'
-rho_list = [0.2,0.5,0.9]
-cant_clusters=10
+rho_list = [0.2, 0.5, 0.9]
+cant_clusters = 10
 sigma2 = 0.9
 cant_sim = 1000
 eps_list = [0.01]
@@ -235,7 +238,7 @@ for eps in eps_list:
 '''
 Monte Carlo simulation for scenario 3
 '''
-n_list = [100,200,400]
+n_list = [100, 200, 400]
 p = 50
 s = 10
 scenario = '3'

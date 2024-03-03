@@ -11,7 +11,7 @@ s = 10
 rho_list = [None]
 cant_sim = 1
 selection ='cyclic'
-save_in = 'results/scenario%s' %(scenario)
+save_in = 'results/scenario%s' % scenario
 for n in n_list:
     for rho in rho_list:
         grafico_areas_ordenadas(scenario, n, p, s, rho=rho, showfig=False, savefig=True,
@@ -30,8 +30,8 @@ s = 10
 rho_list = [0.2, 0.5, 0.9]
 cant_sim = 1
 cant_clusters = 10
-selection ='cyclic'
-save_in = 'results/scenario%s' %(scenario)
+selection = 'cyclic'
+save_in = 'results/scenario%s' % scenario
 for n in n_list:
     for rho in rho_list:
         grafico_areas_ordenadas(scenario, n, p, s, rho=rho, showfig=False, savefig=True,
@@ -49,8 +49,8 @@ p = 50
 s = 10
 rho_list = [0.2,0.5,0.9]
 cant_sim = 1
-selection ='cyclic'
-save_in = 'results/scenario%s' %(scenario)
+selection = 'cyclic'
+save_in = 'results/scenario%s' % scenario
 for n in n_list:
     for rho in rho_list:
         grafico_areas_ordenadas(scenario, n, p, s, rho=rho, showfig=False, savefig=True,
