@@ -220,7 +220,7 @@ Monte Carlo simulation for scenario 2
 '''
 n_list = [400]
 p = 50
-s = 10
+s_list = [10, 15, 20]
 scenario = '2'
 rho_list = [0.2, 0.5, 0.9]
 cant_clusters = 10
@@ -230,7 +230,8 @@ eps_list = [0.01]
 save_in = 'results/'
 for eps in eps_list:
     for rho in rho_list:
-        grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
+        for s in s_list:
+            grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
                                              cant_clusters=cant_clusters, cant_sim=cant_sim, eps=eps,
                                              showfig=False, savefig=True, save_in=save_in)
 
@@ -240,7 +241,7 @@ Monte Carlo simulation for scenario 3
 '''
 n_list = [100, 200, 400]
 p = 50
-s = 10
+s_list = [10,15,20]
 scenario = '3'
 rho_list = [0.2, 0.5, 0.9]
 sigma2 = 0.9
@@ -249,6 +250,7 @@ eps_list = [0.01]
 save_in = 'results/'
 for eps in eps_list:
     for rho in rho_list:
-        grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
+        for s in s_list:
+            grafico_montecarlo_bisec_vs_lassomin(scenario, n_list, p, s, mse='LASSO.MIN', rho=rho,
                                              cant_sim=cant_sim, eps=eps,
                                              showfig=False, savefig=True, save_in=save_in)

@@ -22,12 +22,13 @@ def area_tray_coef_lasso(X, y, fit_intercept=False, selection='cyclic'):
     K = 100
     lambdas = np.logspace(start, end, K)  # esta es la grilla de valores
     areas = p * [0]
-    for lambda_ in lambdas:
+    for i in range(len(lambdas)-1):
+        lambda_ = lambdas[i+1]
         clf = Lasso(alpha=lambda_, fit_intercept=fit_intercept, selection=selection)
         clf.fit(X, y)
         coeficientes = clf.coef_
-        for i in range(p):
-            areas[i] += abs(coeficientes[i])*lambda_
+        for j in range(p):
+            areas[j] += abs(coeficientes[j])*(lambda_-lambdas[i])
     norm = [area / sum(areas) for area in areas]
     return norm
 
