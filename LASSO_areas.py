@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 
 def area_tray_coef_lasso(X, y, fit_intercept=False, selection='cyclic'):
     '''
-    Considera una grilla de valores de lambdas y aplica LASSO en todos los lambda de la grilla
+    Consider a grid of lambda values and apply LASSO on all lambdas in the grid.
     :param X: Features
     :param y: target
-    :return: El area bajo la curva del coeficiente, normalizado (para que sume uno el vector de las areas)
+    :return: The area under the coefficient curve, normalized (so that the vector of the areas adds up to one)
     '''
     n, p = X.shape
     eps = 0.001
@@ -20,7 +20,7 @@ def area_tray_coef_lasso(X, y, fit_intercept=False, selection='cyclic'):
     start = np.log10(lambda_min)
     end = np.log10(lambda_max)
     K = 100
-    lambdas = np.logspace(start, end, K)  # esta es la grilla de valores
+    lambdas = np.logspace(start, end, K)  # grid values
     areas = p * [0]
     for i in range(len(lambdas)-1):
         lambda_ = lambdas[i+1]
@@ -37,14 +37,13 @@ def grafico_areas_ordenadas(scenario, n, p, s, rho=None, showfig=False, savefig=
                             cant_simu=1, selection='cyclic'):
     '''
 
-    :param scenario: El escenario a simular
-    :param n: la cantidad de datos
-    :param p: la cantidad de features o variables
-    :param s: la cantidad de variables verdaderas que generan el targuet
-    :param cantidad_sim: cantidad de simulaciones independientes que hago
-    :param tau_list : los posibles thresholds, selecciono las variables cuya frecuencia esta por encima de este threshold
-    :param rh0: el coeficiente de correlacion, que se usa en los escenarios 2 y 3
-    :return: genera los graficos de las frecuencias
+    :param scenario: the simulated scenario
+    :param n: sample size
+    :param p: number of features or variables
+    :param s: number of informartive variables (1 to s)
+    :param cantidad_sim: number of simulations
+    :param rh0: correlation coefficient
+    :return: plot the areas in decreasing order
     '''
 
     for sim in range(cant_simu):

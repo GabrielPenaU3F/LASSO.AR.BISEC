@@ -205,7 +205,7 @@ s = 10
 scenario = '1'
 rho_list = [None]
 sigma2 = 0.9
-cant_sim = 1000
+cant_sim = 1
 eps_list = [0.01]
 save_in = 'results/'
 for eps in eps_list:
@@ -225,7 +225,7 @@ scenario = '2'
 rho_list = [0.2, 0.5, 0.9]
 cant_clusters = 10
 sigma2 = 0.9
-cant_sim = 1000
+cant_sim = 1
 eps_list = [0.01]
 save_in = 'results/'
 for eps in eps_list:
@@ -245,7 +245,7 @@ s_list = [10,15,20]
 scenario = '3'
 rho_list = [0.2, 0.5, 0.9]
 sigma2 = 0.9
-cant_sim = 1000
+cant_sim = 1
 eps_list = [0.01]
 save_in = 'results/'
 for eps in eps_list:

@@ -12,11 +12,11 @@ def scenario_1(n, p, s, sigma2):
 
 def scenario_2(n, p, s, rho, sigma2, cant_clusters):
     '''
-    :param rho: sigma_{jk}=rho , si mod_M(j)=mod_M(k) donde M es la cantidad de clusters
+    :param rho: sigma_{jk}=rho , if mod_M(j)=mod_M(k) , M is the number of clusters
     :param n: data size
     :param p: features
     :param s: first s not null components in de regression (and equal 1)
-    :return: X=N_n(0,Sigma), y=sum_{i=1}^s 1*X(i)+E, donde E=N_n(0,sigma^2I_n)
+    :return: X=N_n(0,Sigma), y=sum_{i=1}^s 1*X(i)+E,  E=N_n(0,sigma^2I_n)
     '''
     mean = np.zeros(p)
     M = cant_clusters
@@ -34,11 +34,11 @@ def scenario_2(n, p, s, rho, sigma2, cant_clusters):
 
 def scenario_3(n, p, s, rho, sigma2):
     '''
-    :param rho: sigma_{jk}=rho , si mod_M(j)=mod_M(k) donde M es la cantidad de clusters
+    :param rho: sigma_{jk}=rho , if mod_M(j)=mod_M(k)  M is the number of clusters
     :param n: data size
     :param p: features
     :param s: first s not null components in de regression (and equal 1)
-    :return: X=N_n(0,Sigma), y=sum_{i=1}^s 1*X(i)+E, donde E=N_n(0,sigma^2I_n)
+    :return: X=N_n(0,Sigma), y=sum_{i=1}^s 1*X(i)+E,  E=N_n(0,sigma^2I_n)
     '''
     mean = p*[0]
     cov= [[rho**(abs(j-k)) for k in range(p)] for j in range(p)]

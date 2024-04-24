@@ -7,7 +7,7 @@ def best_lasso(X, y, selection='cyclic'):
     '''
     :param X: Features
     :param y: target
-    :return: el valor de lambda que encuentra LASSO.MIN en una grilla de penalziaciones
+    :return: lambda value of LASSO.MIN
     '''
     n = len(y)
     eps = 0.001

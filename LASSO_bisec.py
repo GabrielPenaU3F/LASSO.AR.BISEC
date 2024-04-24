@@ -97,10 +97,3 @@ def seleccion_variables_bis_vs_lassomin(X, y, eps=0.05, mse='todas'):
 
 
 
-# X, y = scenario_1(n, p, s, sigma2)
-# rb = RobustScaler()
-# X = rb.fit_transform(X)
-# vars = seleccion_variables_bis(X,y)
-# print('resultado', vars)
-
-#comentario de prueba
